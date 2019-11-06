@@ -19,32 +19,29 @@ b=2*d-1; % Convert unipolar to bipolar
 T=1; % Bit duration
 Eb=T/2; % This will result in unit amplitude waveforms
 fc=3/T; % Carrier frequency
-t=linspace(0,nbits,SamplesPerBit*nbits); % discrete time sequence between 0 and 5*T (1000 samples)
-N=length(t); % Number of samples
-Nsb=N/length(d); % Number of samples per bit
-dd=repmat(d',1,Nsb); % replicate each bit Nsb times
-bb=repmat(b',1,Nsb); dw=dd'; % Transpose the rows and columns
-dw=dw(:)'; 
-% Convert dw to a column vector (colum by column) and convert to a row vector
-bw=bb';
+t=linspace(0,nbits,SamplesPerBit*nbits); %Array of samples in time
+N=length(t); % Number of total samples
+Nsb=N/length(d); % Number of samples per bit, its computed again to ensure an INT number of waves
+ff0=repmat(d',1,Nsb); % replicate each bit NumberOfSamples times
+fb=repmat(b',1,Nsb); 
+dataf1=ff0'; 
+dataf1=dataf1(:)'; % Transpose matrix
+bw=fb';
 bw=bw(:)'; % Data sequence samples
-w=sqrt(2*Eb/T)*cos(2*pi*fc*t); % carrier waveform
+
+
+w=sqrt(2*Eb/T)*cos(2*pi*fc*t); % carrier signal
 bpsk_w=bw.*w; % modulated waveform
 
-% plotting commands follow
+
+%PLOT
 sgtitle('Modulación BPSK');
 subplot(4,1,1);
 stem(nbitsarray,d,'filled', 'linewidth',2); axis([0 nbits 0 1]) 
 xlabel('Bits');
 ylabel('Amplitd ');
 grid on;
-%plot(nbitsarray,d,'o'); %axis([0 5 -1.5 1.5])
-%yL = get(gca,'YLim');
-%for v = 0:1:nbits-1
-% line([nbitsarray(v+1) nbitsarray(v+1) ],yL,'Color','r');  
-%end
-%line([4 4],yL,'Color','r');
-%line([7 7],yL,'Color','r');
+
 
 subplot(4,1,2);
 plot(t,bw); axis([0 nbits -1.5 1.5]) 
@@ -93,6 +90,7 @@ b=b+SamplesPerBit; %nex value
 c=c+SamplesPerBit; %next value
 end
 
+%PLOT
 
 figure(2);
 sgtitle('Demodulación BPSK');
