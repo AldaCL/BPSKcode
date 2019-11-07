@@ -18,7 +18,7 @@ nbitsarray = (0:1:nbits-1);
 b=2*d-1; % Convert unipolar to bipolar
 T=1; % Bit duration
 Eb=T/2; % This will result in unit amplitude waveforms
-fc=3/T; % Carrier frequency
+fc=4/T; % Carrier frequency, numerator = number of periods per bir
 t=linspace(0,nbits,SamplesPerBit*nbits); %Array of samples in time
 N=length(t); % Number of total samples
 Nsb=N/length(d); % Number of samples per bit, its computed again to ensure an INT number of waves
